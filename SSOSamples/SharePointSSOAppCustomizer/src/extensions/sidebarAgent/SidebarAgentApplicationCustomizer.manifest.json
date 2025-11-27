@@ -6,5 +6,19 @@
   "extensionType": "ApplicationCustomizer",
   "version": "*",
   "manifestVersion": 2,
-  "requiresCustomScript": false
+  "requiresCustomScript": false,
+  "preconfiguredEntries": [{
+    "title": { "default": "Copilot Studio Agent" },
+    "description": { "default": "Displays a Copilot Studio agent in a sliding side panel" },
+    "properties": {
+      "appClientId": "",
+      "tenantId": "",
+      "environmentId": "",
+      "agentIdentifier": "",
+      "directConnectUrl": "",
+      "showTyping": true,
+      "headerBackgroundColor": "white",
+      "agentTitle": "Copilot Studio Agent"
+    }
+  }]
 }

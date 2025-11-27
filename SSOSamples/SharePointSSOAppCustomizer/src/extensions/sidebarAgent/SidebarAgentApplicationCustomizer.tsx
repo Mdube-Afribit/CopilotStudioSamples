@@ -5,6 +5,11 @@ import {
   PlaceholderName,
   ApplicationCustomizerContext
 } from '@microsoft/sp-application-base';
+import {
+  IPropertyPaneConfiguration,
+  PropertyPaneTextField,
+  PropertyPaneToggle
+} from '@microsoft/sp-property-pane';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import * as strings from 'SidebarAgentApplicationCustomizerStrings';
@@ -226,6 +231,17 @@ export default class SidebarAgentApplicationCustomizer
   public onInit(): Promise<void> {
     Log.info(LOG_SOURCE, `Initialized ${strings.Title}`);
     
+    // Set default values if not provided
+    if (this.properties.showTyping === undefined) {
+      this.properties.showTyping = true;
+    }
+    if (!this.properties.headerBackgroundColor) {
+      this.properties.headerBackgroundColor = 'white';
+    }
+    if (!this.properties.agentTitle) {
+      this.properties.agentTitle = 'Copilot Studio Agent';
+    }
+    
     if (!this.properties.appClientId || !this.properties.tenantId) {
       Log.error(LOG_SOURCE, new Error('appClientId and tenantId are required properties.'));
       return Promise.reject('Missing required properties: appClientId and tenantId');
@@ -239,6 +255,70 @@ export default class SidebarAgentApplicationCustomizer
     this.context.placeholderProvider.changedEvent.add(this, this._renderPlaceholders);
     this._renderPlaceholders();
     return Promise.resolve();
+  }
+
+  protected getPropertyPaneConfiguration(): IPropertyPaneConfiguration {
+    return {
+      pages: [
+        {
+          header: {
+            description: strings.PropertyPaneDescription
+          },
+          groups: [
+            {
+              groupName: strings.AuthenticationGroupName,
+              groupFields: [
+                PropertyPaneTextField('appClientId', {
+                  label: strings.AppClientIdFieldLabel,
+                  description: strings.AppClientIdFieldDescription
+                }),
+                PropertyPaneTextField('tenantId', {
+                  label: strings.TenantIdFieldLabel,
+                  description: strings.TenantIdFieldDescription
+                })
+              ]
+            },
+            {
+              groupName: strings.AgentConnectionGroupName,
+              groupFields: [
+                PropertyPaneTextField('directConnectUrl', {
+                  label: strings.DirectConnectUrlFieldLabel,
+                  description: strings.DirectConnectUrlFieldDescription,
+                  multiline: true,
+                  rows: 3
+                }),
+                PropertyPaneTextField('environmentId', {
+                  label: strings.EnvironmentIdFieldLabel,
+                  description: strings.EnvironmentIdFieldDescription
+                }),
+                PropertyPaneTextField('agentIdentifier', {
+                  label: strings.AgentIdentifierFieldLabel,
+                  description: strings.AgentIdentifierFieldDescription
+                })
+              ]
+            },
+            {
+              groupName: strings.AppearanceGroupName,
+              groupFields: [
+                PropertyPaneToggle('showTyping', {
+                  label: strings.ShowTypingFieldLabel,
+                  onText: strings.ShowTypingOnText,
+                  offText: strings.ShowTypingOffText
+                }),
+                PropertyPaneTextField('headerBackgroundColor', {
+                  label: strings.HeaderBackgroundColorFieldLabel,
+                  description: strings.HeaderBackgroundColorFieldDescription
+                }),
+                PropertyPaneTextField('agentTitle', {
+                  label: strings.AgentTitleFieldLabel,
+                  description: strings.AgentTitleFieldDescription
+                })
+              ]
+            }
+          ]
+        }
+      ]
+    };
   }
 
   private _renderPlaceholders(): void {
