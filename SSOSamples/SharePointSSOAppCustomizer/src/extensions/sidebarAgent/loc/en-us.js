@@ -10,7 +10,7 @@ define([], function() {
     "TenantIdFieldLabel": "Tenant ID",
     "TenantIdFieldDescription": "Azure AD/Entra tenant ID",
     "DirectConnectUrlFieldLabel": "Direct Connect URL",
-    "DirectConnectUrlFieldDescription": "Direct connection URL from Copilot Studio (alternative to Environment ID + Agent Identifier)",
+    "DirectConnectUrlFieldDescription": "Direct connection URL from Copilot Studio (e.g., 'https://xxxx.environment.api.powerplatform.com/...'). Alternative to Environment ID + Agent Identifier.",
     "EnvironmentIdFieldLabel": "Environment ID",
     "EnvironmentIdFieldDescription": "Copilot Studio environment ID (required if not using Direct Connect URL)",
     "AgentIdentifierFieldLabel": "Agent Identifier",
