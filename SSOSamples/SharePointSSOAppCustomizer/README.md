@@ -21,6 +21,7 @@ The key advantage of using the Microsoft 365 Agents SDK is its ability to connec
 - **New Conversation Support**: Users can start fresh conversations without leaving the page
 - **Fluent UI Styling**: Uses the Fluent UI theme pack for a native Microsoft 365 look and feel
 - **Tenant Graph Grounding**: Enables the agent to access and search Microsoft 365 content through [tenant graph grounding](https://learn.microsoft.com/en-us/microsoft-copilot-studio/knowledge-copilot-studio#tenant-graph-grounding)
+- **SPFx Property Pane Configuration**: Configure the agent settings directly from the SharePoint UI without editing XML files
 
 ## Prerequisites
 
@@ -164,6 +165,36 @@ ClientSideComponentProperties="{
 
 > [!NOTE]
 > You must provide either `directConnectUrl` OR both `environmentId` and `agentIdentifier`.
+
+### Step 4b: Configure via Property Pane (Alternative)
+
+As an alternative to editing `elements.xml`, you can configure the extension using the SPFx Property Pane after deployment:
+
+1. **Deploy the solution** to your SharePoint App Catalog (see Step 6-7)
+2. **Add the customizer** to your SharePoint site
+3. **Access the Property Pane** by navigating to **Site Settings** → **Site App Extensions** or by using the tenant-wide deployment options
+4. **Configure the settings** using the Property Pane UI:
+
+The Property Pane is organized into three groups:
+
+**Authentication Settings**
+- **App Client ID**: Your Azure AD app registration client ID
+- **Tenant ID**: Your Azure AD/Entra tenant ID
+
+**Agent Connection**
+- **Direct Connect URL**: Direct connection URL from Copilot Studio (recommended method)
+- **Environment ID**: Copilot Studio environment ID (alternative to Direct Connect URL)
+- **Agent Identifier**: Agent's schema name from Copilot Studio (alternative to Direct Connect URL)
+
+> [!NOTE]
+> Use either the Direct Connect URL OR both Environment ID and Agent Identifier, not all three.
+
+**Appearance**
+- **Show Typing Indicators**: Toggle to show/hide typing indicators (default: Show)
+- **Header Background Color**: CSS color value for the header bar (e.g., `white`, `#0078d4`)
+- **Agent Title**: Display title shown in the agent panel header
+
+This approach allows SharePoint administrators to configure the extension without needing to edit XML files or rebuild the solution.
 
 ### Step 5: Test Locally (Optional)
 
