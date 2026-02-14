@@ -11,8 +11,10 @@ export interface ISidebarAgentApplicationCustomizerProperties {
 
 export interface ISidebarAgentState {
   isPanelOpen: boolean;
+  isSettingsOpen: boolean;
   currentUserLogin?: string;
   chatKey: number;
+  activeProperties: ISidebarAgentApplicationCustomizerProperties;
 }
 
 export interface ISidePanelProps {
@@ -22,5 +24,6 @@ export interface ISidePanelProps {
   baseUrl?: string;
   onDismiss: () => void;
   onNewConversation: () => void;
+  onOpenSettings: () => void;
   chatKey: number;
 }

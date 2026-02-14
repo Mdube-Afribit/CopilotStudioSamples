@@ -5,14 +5,15 @@
         Location="ClientSideExtension.ApplicationCustomizer"
         ClientSideComponentId="4c6e29f2-7eee-4f9f-bbd2-20c8859d0ba2"
         ClientSideComponentProperties="{
-            &quot;appClientId&quot;: &quot;YOUR_APP_CLIENT_ID&quot;,
-            &quot;tenantId&quot;: &quot;YOUR_TENANT_ID&quot;,
-            &quot;environmentId&quot;: &quot;YOUR_ENVIRONMENT_ID&quot;,
-            &quot;agentIdentifier&quot;: &quot;YOUR_AGENT_IDENTIFIER&quot;,
-            &quot;directConnectUrl&quot;: &quot;YOUR_DIRECT_CONNECT_URL&quot;,
+            &quot;appClientId&quot;: &quot;f5e1f474-5e52-4fd2-844c-022428f9e532&quot;,
+            &quot;tenantId&quot;: &quot;a91d1fa7-91fa-4c36-8626-613c01ea71ee&quot;,
+            &quot;environmentId&quot;: &quot;362139ad-5ee1-ebe3-839c-f6a8692d1d53&quot;,
+            &quot;agentIdentifier&quot;: &quot;copilots_header_c93fa&quot;,
+            &quot;directConnectUrl&quot;: &quot;https://362139ad5ee1ebe3839cf6a8692d1d.53.environment.api.powerplatform.com/copilotstudio/dataverse-backed/authenticated/bots/copilots_header_c93fa/conversations?api-version=2022-03-01-preview&quot;,
             &quot;showTyping&quot;: true,
-            &quot;headerBackgroundColor&quot;: &quot;white&quot;,
-            &quot;agentTitle&quot;: &quot;Copilot Studio Agent&quot;
+            &quot;headerBackgroundColor&quot;: &quot;#0078d4&quot;,
+            &quot;agentTitle&quot;: &quot;BITA&quot;,
+            &quot;agentName&quot;: &quot;Master Agent&quot;
         }">
     </CustomAction>
 </Elements>

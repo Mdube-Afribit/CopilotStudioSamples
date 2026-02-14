@@ -1,0 +1,759 @@
+/**
+ * Chat.module.scss
+ * 
+ * Afribit branded styles for the Copilot Chat component.
+ * 
+ * Brand Colors:
+ * - Primary: #F27E4A (Orange)
+ * - Text Primary: #002746 (Dark Blue)
+ * - Background: #F7F7FF (Light neutral)
+ * - Card Background: #FFFFFF (White)
+ */
+
+// Afribit Brand Color Variables
+$afribit-primary: #F27E4A;
+$afribit-primary-hover: #e06a38;
+$afribit-primary-light: rgba(242, 126, 74, 0.1);
+$afribit-text-primary: #002746;
+$afribit-background: #F7F7FF;
+$afribit-card-background: #FFFFFF;
+$afribit-agent-bubble-bg: #f0f2f5;
+$afribit-border-color: #e1e4e8;
+$afribit-shadow: rgba(0, 39, 70, 0.1);
+$afribit-success: #4ade80;
+$afribit-warning: #f59e0b;
+$afribit-error: #dc2626;
+
+// ============================================
+// MAIN CONTAINER
+// ============================================
+.chatContainer {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: $afribit-card-background;
+  overflow: hidden;
+  font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
+}
+
+// ============================================
+// CHAT HEADER
+// ============================================
+.chatHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 16px 20px 28px 20px;
+  // Add extra right padding to prevent overlap with action bar buttons
+  padding-right: 120px;
+  background: linear-gradient(135deg, $afribit-primary 0%, darken($afribit-primary, 10%) 100%);
+  color: $afribit-card-background;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+  min-height: 72px;
+}
+
+.headerInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.headerTitle {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  color: inherit;
+}
+
+.headerSubtitle {
+  margin: 0;
+  font-size: 12px;
+  opacity: 0.9;
+  font-weight: 400;
+}
+
+// Status badge - positioned below action buttons area
+.statusBadge {
+  position: absolute;
+  top: 50px;
+  right: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px 3px 8px;
+  background-color: rgba(0, 0, 0, 0.15);
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(6px);
+  white-space: nowrap;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+  
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+}
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  // Ensure it doesn't get pushed off screen
+  flex-shrink: 0;
+}
+
+.statusIndicator {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 500;
+  backdrop-filter: blur(4px);
+  white-space: nowrap;
+}
+
+.statusDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  
+  &.online {
+    background-color: #4ade80;
+    box-shadow: 0 0 6px rgba(74, 222, 128, 0.8);
+    animation: pulse 2s infinite;
+  }
+  
+  &.offline {
+    background-color: #9ca3af;
+  }
+  
+  &.connecting {
+    background-color: $afribit-warning;
+    animation: blink 1s infinite;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.1);
+  }
+}
+
+@keyframes blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+// ============================================
+// WEBCHAT CONTAINER & OVERRIDES
+// ============================================
+.webChatContainer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background-color: $afribit-card-background;
+
+  // Override WebChat default styles to match Afribit theme
+  :global {
+    // Basic transcript container
+    .webchat__basic-transcript {
+      background-color: $afribit-card-background !important;
+      padding: 8px 0 !important;
+    }
+
+    // Activity containers - add padding
+    .webchat__stacked-layout__content {
+      padding: 0 12px !important;
+    }
+
+    // Send box area
+    .webchat__send-box {
+      background-color: $afribit-card-background !important;
+      border-top: 1px solid $afribit-border-color !important;
+      padding: 12px 16px !important;
+    }
+
+    .webchat__send-box__main {
+      background-color: #f9fafb !important;
+      border: 2px solid $afribit-border-color !important;
+      border-radius: 24px !important;
+      padding: 0 8px !important;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+
+      &:focus-within {
+        border-color: $afribit-primary !important;
+        box-shadow: 0 0 0 3px $afribit-primary-light !important;
+        background-color: $afribit-card-background !important;
+      }
+    }
+
+    .webchat__send-box__text-box {
+      color: $afribit-text-primary !important;
+    }
+
+    .webchat__send-box-text-box__input {
+      color: $afribit-text-primary !important;
+      font-size: 14px !important;
+      
+      &::placeholder {
+        color: #a0a5ab !important;
+      }
+    }
+
+    // Send button
+    .webchat__send-box__button {
+      background-color: $afribit-primary !important;
+      border-radius: 50% !important;
+      width: 36px !important;
+      height: 36px !important;
+      min-width: 36px !important;
+      margin: 4px !important;
+      transition: background-color 0.2s ease, transform 0.15s ease !important;
+      
+      &:hover {
+        background-color: $afribit-primary-hover !important;
+        transform: scale(1.05) !important;
+      }
+
+      &:active {
+        transform: scale(0.95) !important;
+      }
+
+      svg {
+        fill: white !important;
+      }
+    }
+
+    // User message bubbles
+    .webchat__bubble--from-user {
+      .webchat__bubble__content {
+        background-color: $afribit-primary !important;
+        color: $afribit-card-background !important;
+        border-radius: 18px 18px 4px 18px !important;
+        padding: 12px 16px !important;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) !important;
+      }
+    }
+
+    // Bot message bubbles  
+    .webchat__bubble:not(.webchat__bubble--from-user) {
+      .webchat__bubble__content {
+        background-color: $afribit-agent-bubble-bg !important;
+        color: $afribit-text-primary !important;
+        border-radius: 18px 18px 18px 4px !important;
+        padding: 12px 16px !important;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+      }
+    }
+
+    // Suggested actions
+    .webchat__suggested-actions {
+      padding: 8px 12px !important;
+    }
+
+    .webchat__suggested-action__button {
+      border: 2px solid $afribit-primary !important;
+      color: $afribit-primary !important;
+      border-radius: 20px !important;
+      padding: 8px 16px !important;
+      font-weight: 500 !important;
+      background-color: transparent !important;
+      transition: all 0.2s ease !important;
+      
+      &:hover {
+        background-color: $afribit-primary !important;
+        color: white !important;
+      }
+    }
+
+    // Typing indicator
+    .webchat__typing-indicator {
+      background-color: $afribit-agent-bubble-bg !important;
+      border-radius: 18px 18px 18px 4px !important;
+      padding: 12px 16px !important;
+    }
+
+    // Timestamp
+    .webchat__timestamp {
+      font-size: 11px !important;
+      color: #8c939a !important;
+    }
+
+    // Scrollbar styling
+    .webchat__basic-transcript::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .webchat__basic-transcript::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .webchat__basic-transcript::-webkit-scrollbar-thumb {
+      background-color: rgba(0, 39, 70, 0.2);
+      border-radius: 3px;
+
+      &:hover {
+        background-color: rgba(0, 39, 70, 0.3);
+      }
+    }
+
+    // Adaptive card styling
+    .webchat__bubble__content .ac-container {
+      background-color: transparent !important;
+    }
+
+    .webchat__bubble__content .ac-textBlock {
+      color: inherit !important;
+    }
+  }
+}
+
+// ============================================
+// WELCOME MESSAGE
+// ============================================
+.welcomeMessage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 48px 24px;
+  flex: 1;
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.welcomeIcon {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 24px;
+  color: $afribit-primary;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.welcomeTitle {
+  margin: 0 0 12px 0;
+  font-size: 22px;
+  font-weight: 700;
+  color: $afribit-text-primary;
+  letter-spacing: -0.3px;
+}
+
+.welcomeText {
+  margin: 0 0 24px 0;
+  font-size: 14px;
+  color: #6b7280;
+  line-height: 1.6;
+  max-width: 300px;
+}
+
+.quickActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  max-width: 320px;
+}
+
+.quickActionBtn {
+  padding: 10px 18px;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: $afribit-background;
+  border: 1px solid $afribit-border-color;
+  border-radius: 20px;
+  color: $afribit-text-primary;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: $afribit-primary;
+    color: $afribit-card-background;
+    border-color: $afribit-primary;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px $afribit-shadow;
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+// ============================================
+// ERROR MESSAGE
+// ============================================
+.errorMessage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 32px 24px;
+  margin: 16px;
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 16px;
+  text-align: center;
+  flex: 1;
+  animation: shake 0.5s ease-out;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
+  20%, 40%, 60%, 80% { transform: translateX(4px); }
+}
+
+.errorIcon {
+  width: 48px;
+  height: 48px;
+  color: $afribit-error;
+}
+
+.errorTitle {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: $afribit-error;
+}
+
+.errorText {
+  margin: 0;
+  font-size: 14px;
+  color: #991b1b;
+  line-height: 1.5;
+  max-width: 280px;
+}
+
+.retryButton {
+  margin-top: 8px;
+  padding: 10px 24px;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: $afribit-error;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: darken($afribit-error, 10%);
+    transform: translateY(-1px);
+  }
+}
+
+// ============================================
+// WARNING MESSAGE (Configuration)
+// ============================================
+.warningMessage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 32px 24px;
+  margin: 16px;
+  background-color: #fffbeb;
+  border: 1px solid #fcd34d;
+  border-radius: 16px;
+  text-align: center;
+  flex: 1;
+}
+
+.warningIcon {
+  width: 56px;
+  height: 56px;
+  color: $afribit-warning;
+}
+
+.warningTitle {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #92400e;
+}
+
+.warningText {
+  margin: 0;
+  font-size: 14px;
+  color: #a16207;
+  line-height: 1.5;
+  max-width: 300px;
+}
+
+// ============================================
+// LOADING/CONNECTING STATE
+// ============================================
+.connectingMessage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+  flex: 1;
+  gap: 20px;
+  background-color: $afribit-card-background;
+}
+
+.spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid $afribit-border-color;
+  border-top-color: $afribit-primary;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.connectingText {
+  font-size: 16px;
+  font-weight: 500;
+  color: $afribit-text-primary;
+}
+
+.connectingSubtext {
+  font-size: 13px;
+  color: #6b7280;
+  margin-top: -12px;
+}
+
+// ============================================
+// POWERED BY FOOTER
+// ============================================
+.poweredBy {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 12px 16px;
+  background-color: $afribit-background;
+  border-top: 1px solid $afribit-border-color;
+  font-size: 11px;
+  color: #9ca3af;
+  flex-shrink: 0;
+
+  a {
+    color: $afribit-primary;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: $afribit-primary-hover;
+      text-decoration: underline;
+    }
+  }
+}
+
+// ============================================
+// TYPING INDICATOR (Custom)
+// ============================================
+.typingIndicator {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 12px 16px;
+  background-color: $afribit-agent-bubble-bg;
+  border-radius: 18px 18px 18px 4px;
+  align-self: flex-start;
+  margin: 8px 16px;
+}
+
+.typingDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #9ca3af;
+  animation: typingBounce 1.4s infinite ease-in-out;
+
+  &:nth-child(1) {
+    animation-delay: 0s;
+  }
+
+  &:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+
+  &:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+}
+
+@keyframes typingBounce {
+  0%, 60%, 100% {
+    transform: translateY(0);
+    opacity: 0.5;
+  }
+  30% {
+    transform: translateY(-6px);
+    opacity: 1;
+  }
+}
+
+// ============================================
+// MESSAGES AREA (if not using WebChat)
+// ============================================
+.messagesArea {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background-color: $afribit-card-background;
+
+  // Custom scrollbar styling
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 39, 70, 0.2);
+    border-radius: 3px;
+
+    &:hover {
+      background-color: rgba(0, 39, 70, 0.3);
+    }
+  }
+}
+
+// Message wrapper
+.messageWrapper {
+  display: flex;
+  flex-direction: column;
+  max-width: 85%;
+  animation: messageSlideIn 0.3s ease-out;
+
+  &.userMessage {
+    align-self: flex-end;
+    align-items: flex-end;
+  }
+
+  &.agentMessage {
+    align-self: flex-start;
+    align-items: flex-start;
+  }
+}
+
+@keyframes messageSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Message bubble styling
+.messageBubble {
+  padding: 12px 16px;
+  border-radius: 18px;
+  font-size: 14px;
+  line-height: 1.5;
+  word-wrap: break-word;
+  max-width: 100%;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+
+  &.userBubble {
+    background-color: $afribit-primary;
+    color: $afribit-card-background;
+    border-bottom-right-radius: 4px;
+  }
+
+  &.agentBubble {
+    background-color: $afribit-agent-bubble-bg;
+    color: $afribit-text-primary;
+    border-bottom-left-radius: 4px;
+  }
+}
+
+.messageTimestamp {
+  font-size: 11px;
+  color: #8c939a;
+  margin-top: 4px;
+  padding: 0 4px;
+}
+
+// ============================================
+// RECONNECT BANNER
+// ============================================
+.reconnectBanner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  background-color: #fef3c7;
+  border-bottom: 1px solid #fcd34d;
+  font-size: 13px;
+  color: #92400e;
+  flex-shrink: 0;
+
+  .reconnectButton {
+    padding: 6px 14px;
+    font-size: 12px;
+    font-family: inherit;
+    font-weight: 500;
+    background-color: $afribit-warning;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: darken($afribit-warning, 10%);
+    }
+  }
+}
